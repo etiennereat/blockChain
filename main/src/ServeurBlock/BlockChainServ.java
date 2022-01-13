@@ -5,7 +5,9 @@ import utils.BlockChainITF;
 import utils.BlockHash;
 import utils.BlockHashFactory;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class BlockChainServ implements BlockChainITF {
     private ArrayList<Block> listBlock;
@@ -13,12 +15,14 @@ public class BlockChainServ implements BlockChainITF {
     private BlockHash blockHash;
     private Block currentBlockMined;
     private String currentConstraint;
+    private Random stringGenerator;
 
 
     public BlockChainServ() {
         blockHash = BlockHashFactory.getInstance();
         listBlock = new ArrayList<>();
         lastBlock = null;
+        stringGenerator = new Random();
         buildNextBlock();
     }
 
@@ -56,15 +60,28 @@ public class BlockChainServ implements BlockChainITF {
 
     private void addSafeBlock(Block block){
         listBlock.add(block);
-        lastBlock = block;
         buildNextBlock();
+        lastBlock = block;
     }
 
     private void buildNextBlock(){
-        //todo make function who give the next block setup
-        Block nextBlock = new Block(currentBlockMined.getId());
-        nextBlock.setPreviousHash(currentBlockMined.getHash());
-        nextBlock.setConstraint(getCurrentConstraint());
+        int currentID;
+        if(currentBlockMined == null){
+            currentID = 0;
+        }
+        else{
+            currentID = currentBlockMined.getId() + 1;
+        }
+        currentBlockMined = new Block(currentID);
+        if(lastBlock != null) {
+            currentBlockMined.setPreviousHash(lastBlock.getHash());
+        }
+        currentBlockMined.setConstraint(getCurrentConstraint());
+
+        //todo make function to get next data
+        byte[] array = new byte[7]; // length is bounded by 7
+        stringGenerator.nextBytes(array);
+        currentBlockMined.setData(new String(array, Charset.forName("UTF-8")));
     }
 
 

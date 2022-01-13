@@ -3,7 +3,7 @@ import utils.Block;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-public class testBlock {
+public class TestBlock {
 
     static Block bloc1;
     @BeforeAll
