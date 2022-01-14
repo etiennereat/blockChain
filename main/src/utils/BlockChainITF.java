@@ -13,7 +13,7 @@ public interface BlockChainITF {
 
     public Block getCurrentBlockMined();
 
-    public String getCurrentConstraint();
+    public int getCurrentConstraint();
 
 
 }

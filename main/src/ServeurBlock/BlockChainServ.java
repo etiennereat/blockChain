@@ -14,7 +14,7 @@ public class BlockChainServ implements BlockChainITF {
     private Block lastBlock;
     private BlockHash blockHash;
     private Block currentBlockMined;
-    private String currentConstraint;
+    private int currentConstraint;
     private Random stringGenerator;
 
 
@@ -54,7 +54,7 @@ public class BlockChainServ implements BlockChainITF {
         return currentBlockMined.clone();
     }
 
-    public String getCurrentConstraint(){
+    public int getCurrentConstraint(){
         return currentConstraint;
     }
 

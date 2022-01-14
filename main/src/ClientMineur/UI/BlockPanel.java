@@ -1,4 +1,4 @@
-package ClientMineur;
+package ClientMineur.UI;
 
 
 import org.jetbrains.annotations.NotNull;
@@ -62,7 +62,7 @@ public class BlockPanel extends JPanel {
         g.drawString(textGrey,  (getWidth()- (text.length())* (int)(fontSize/1.5) )/2 + textGreen.length()*(int)(fontSize/1.5) + textRed.length()*(int)(fontSize/1.5), (getHeight() + (int)(fontSize/1.5)) /2 );
         g.drawRect((getWidth()- (text.length())* (int)(fontSize/1.5) )/2,(getHeight() - fontSize) /2 , textGreen.length()*(int)(fontSize/1.5) + textRed.length()*(int)(fontSize/1.5),fontSize);
         if(contrainte!= 0){
-            double tmp = Math.pow(2,contrainte);
+            double tmp = Math.pow(16,contrainte);
             g.setColor(new Color(0,0,0));
             g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
             g.drawString(contrainte+" contraintes : "+Double.toString(tmp)+"$",0,40);

@@ -1,4 +1,4 @@
-import ClientMineur.BlockPanel;
+import ClientMineur.UI.BlockPanel;
 import org.junit.jupiter.api.*;
 
 import javax.swing.*;

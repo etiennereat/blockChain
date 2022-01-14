@@ -1,9 +1,9 @@
 package ClientMineur;
 
-import javax.swing.*;
+import ClientMineur.UI.BlockPanel;
 
 public interface BlockChainUI {
 
-    public void showCurrentWork(BlockPanel panel);
+    public void showCurrentWork(String hash);
 
 }
