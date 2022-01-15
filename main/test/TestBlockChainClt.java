@@ -9,9 +9,9 @@ public class TestBlockChainClt {
     @Test
     public void testConvertisseur(){
         String str;
-        double tmp;
+        long tmp;
         BlockChainClt bloc = new BlockChainClt();
-        for(double i = 0; i< 10000; i++){
+        for(long i = 0; i< 10000; i++){
             str = bloc.convertisseurIndiceToString(i);
             tmp=0;
             for(int  j=0; j < str.length();j++){
@@ -28,10 +28,10 @@ public class TestBlockChainClt {
         BlockChainClt blocClt = new BlockChainClt();
         Block bloc = new Block(1);
         bloc.setConstraint(7);
-        bloc.setData("testFindSolution");
+        bloc.setData("test");
         bloc.setPreviousHash("");
         blocClt.setCurrentBlockMined(bloc);
-        blocClt.searchWorkProofCurrentBlockMined();
+        blocClt.bestWaySearchWorkProofCurrentBlockMined();
         while(!blocClt.getCurrentBlockMined().isSolved()){
             try {
                 Thread.sleep(3000);

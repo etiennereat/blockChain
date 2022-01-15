@@ -11,6 +11,7 @@ public class BlockHash {
     }
 
     public Boolean checkHash(@NotNull Block block){
+
         return block.getHash().equals(computeHash(block));
     }
 

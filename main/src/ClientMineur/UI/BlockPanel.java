@@ -17,20 +17,11 @@ public class BlockPanel extends JPanel {
     private String textRed;
     private String textGrey;
 
+    private Block bloc;
 
-
-    private int contrainte;
-
-    public void drawText(@NotNull String text){
-        cutText(text,getContrainte());
+    public void drawText(){
         this.repaint();
     }
-
-    public void drawText(@NotNull String text, int constraintSize){
-        cutText(text,constraintSize);
-        this.repaint();
-    }
-
 
     private void cutText(String text, int constraintSize){
         this.text = text;
@@ -51,29 +42,35 @@ public class BlockPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        //hash
+
+        cutText(bloc.getHash(),bloc.getConstraint());
         int fontSize = getWidth()/(text.length()+1);
         g.setFont(new Font("TimesRoman", Font.PLAIN, fontSize));
-        //g.drawString(text,  (getWidth()- (text.length())* (int)(fontSize/1.5) )/2 , (getHeight() + (int)(fontSize/1.5)) /2 );
         g.setColor(new Color(50,150,50));
         g.drawString(textGreen,  (getWidth()- (text.length())* (int)(fontSize/1.5) )/2, (getHeight() + (int)(fontSize/1.5)) /2 );
         g.setColor(new Color(150,50,50));
         g.drawString(textRed,  (getWidth()- (text.length())* (int)(fontSize/1.5) )/2 + textGreen.length()*(int)(fontSize/1.5), (getHeight() + (int)(fontSize/1.5)) /2 );
-        g.setColor(new Color(150,150,150));
+        g.setColor(new Color(100,100,100));
         g.drawString(textGrey,  (getWidth()- (text.length())* (int)(fontSize/1.5) )/2 + textGreen.length()*(int)(fontSize/1.5) + textRed.length()*(int)(fontSize/1.5), (getHeight() + (int)(fontSize/1.5)) /2 );
         g.drawRect((getWidth()- (text.length())* (int)(fontSize/1.5) )/2,(getHeight() - fontSize) /2 , textGreen.length()*(int)(fontSize/1.5) + textRed.length()*(int)(fontSize/1.5),fontSize);
-        if(contrainte!= 0){
-            double tmp = Math.pow(16,contrainte);
-            g.setColor(new Color(0,0,0));
-            g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
-            g.drawString(contrainte+" contraintes : "+Double.toString(tmp)+"$",0,40);
-        }
+
+        //contrainte
+        double tmp = Math.pow(16,bloc.getConstraint());
+        g.setColor(new Color(0,0,0));
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 40));
+        g.drawString(bloc.getConstraint()+" contraintes : "+tmp+"$",0,40);
+
+        //Bloc id
+        g.drawString("Bloc n°"+bloc.getId(),getWidth() - ((7 + Integer.toString(bloc.getId()).length())*24),40);
+
     }
 
-    public int getContrainte() {
-        return contrainte;
+    public void setBloc(Block bloc) {
+        this.bloc = bloc;
     }
 
-    public void setContrainte(int contrainte) {
-        this.contrainte = contrainte;
+    public Block getBloc() {
+        return bloc;
     }
 }

@@ -1,5 +1,6 @@
 package ClientMineur;
 
+import ClientMineur.UI.BlockChainUI;
 import ClientMineur.UI.BlockPanel;
 import utils.Block;
 import utils.BlockChainITF;
@@ -63,9 +64,13 @@ public class BlockChainClt implements BlockChainITF, BlockChainUI {
         this.currentBlockMined = currentBlockMined;
     }
 
-    public void searchWorkProofCurrentBlockMined(){
+    public void bestWaySearchWorkProofCurrentBlockMined(){
+        customeWaySearchWorkProofCurrentBlockMined(Runtime.getRuntime().availableProcessors());
+    }
+
+    public void customeWaySearchWorkProofCurrentBlockMined(int nbTrhread){
         reinitTry();
-        for(int i =0; i< 10 ; i++) {
+        for(int i =0; i< nbTrhread ; i++) {
             Thread searcher = new Thread() {
                 public void run() {
                     Block copieBlock = currentBlockMined.clone();
@@ -78,8 +83,9 @@ public class BlockChainClt implements BlockChainITF, BlockChainUI {
                         blockHash.hash(copieBlock);
                         if (copieBlock.nb0inHash() >= currentBlockMined.getBestHash0size()) {
                             currentBlockMined.setBestHash0size(copieBlock.nb0inHash());
-                            showCurrentWork(copieBlock.getHash());
-                            if(currentBlockMined.getBestHash0size() == currentBlockMined.getConstraint()){
+                            currentBlockMined.setHash(copieBlock.getHash());
+                            showCurrentWork();
+                            if(currentBlockMined.getBestHash0size() >= currentBlockMined.getConstraint()){
                                 currentBlockMined.setSolved(true);
                                 currentBlockMined.setProofWork(currentProofOfWork);
                                 currentBlockMined.setHash(copieBlock.getHash());
@@ -104,7 +110,7 @@ public class BlockChainClt implements BlockChainITF, BlockChainUI {
     }
 
 
-    public String convertisseurIndiceToString(double indice){
+    public String convertisseurIndiceToString(long indice){
         String s = new String();
         while(indice >= 1) {
             char tmp = (char) ('!' + (indice % 93));
@@ -116,12 +122,11 @@ public class BlockChainClt implements BlockChainITF, BlockChainUI {
 
 //-------------------------------------------------------UI-----------------------------------------------------------//
     @Override
-    public synchronized void showCurrentWork(String hash) {
+    public synchronized void showCurrentWork() {
         if(frame == null){
             initUi();
         }
-        panel.setContrainte(currentBlockMined.getConstraint());
-        panel.drawText(hash);
+        panel.drawText();
     }
 
     private  synchronized void  initUi(){
@@ -135,5 +140,6 @@ public class BlockChainClt implements BlockChainITF, BlockChainUI {
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+        panel.setBloc(currentBlockMined);
     }
 }

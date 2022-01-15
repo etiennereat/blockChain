@@ -69,7 +69,7 @@ public class Block  implements Cloneable{
         return hash;
     }
 
-    public void setHash(String hash) {
+    public synchronized void setHash(String hash) {
         this.hash = hash;
     }
 
